@@ -1,0 +1,33 @@
+import {startService} from '@orion-js/echoes'
+import echoes from 'app/controllers/echoes'
+import {services} from './services'
+import logCreator from './logCreator'
+import {env} from '@orion-js/env'
+import {logger} from '@orion-js/logger'
+
+const brokers = process.env.KAFKA_BROKERS
+  ? process.env.KAFKA_BROKERS.split(',')
+  : []
+const ssl = process.env.KAFKA_BROKERS_USE_SSL === 'true'
+
+if (brokers.length) {
+  startService({
+    client: {
+      clientId: 'multiapp_clientid',
+      brokers,
+      ssl,
+      logCreator,
+    },
+    consumer: {
+      groupId: `this_service_name`,
+    },
+    producer: {},
+    requests: {
+      key: env.echoes_password,
+      services: services,
+    },
+    echoes,
+  })
+} else {
+  logger.warn('KAFKA_BROKERS env not configured. Skipping echoes init.')
+}

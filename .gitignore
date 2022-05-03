@@ -1,0 +1,8 @@
+# Node modules
+node_modules
+
+# The folder of the build
+build
+
+# The folder of the local compilation of the project
+.orion
