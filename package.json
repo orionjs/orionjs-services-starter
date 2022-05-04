@@ -11,7 +11,7 @@
   "dependencies": {
     "@orion-js/cache": "^3.2.0",
     "@orion-js/crypto": "3.2.12",
-    "@orion-js/dogs": "^3.2.14",
+    "@orion-js/dogs": "^3.2.15",
     "@orion-js/echoes": "^3.2.11",
     "@orion-js/env": "^3.2.0",
     "@orion-js/graphql": "^3.2.11",
@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.26.0",
     "jest": "^28.0.3",
     "prettier": "2.6.2",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^28.0.1",
     "typescript": "^4.6.4"
   }
 }
