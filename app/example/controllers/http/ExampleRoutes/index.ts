@@ -6,10 +6,10 @@ import {
   Routes,
 } from '@orion-js/http'
 import {Inject} from '@orion-js/services'
-import {ExampleService} from 'app/services/ExampleService'
+import {ExampleService} from 'app/example/services/ExampleService'
 
 @Routes()
-export class ExampleRoutes {
+export default class ExampleRoutes {
   @Inject()
   private exampleService: ExampleService
 
@@ -24,5 +24,3 @@ export class ExampleRoutes {
     }
   }
 }
-
-export default getServiceRoutes(ExampleRoutes)

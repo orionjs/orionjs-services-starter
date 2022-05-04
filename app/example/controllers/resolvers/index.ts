@@ -1,5 +1,3 @@
 import ExampleResolvers from './ExampleResolvers'
 
-export default {
-  ...ExampleResolvers,
-}
+export default [ExampleResolvers]

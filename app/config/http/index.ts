@@ -1,16 +1,15 @@
-import components from 'app/controllers/http'
 import home from './home'
 import healthCheck from './healthCheck'
-import {startServer, registerRoutes} from '@orion-js/http'
+import {startServer, registerRoutes, RoutesMap} from '@orion-js/http'
 import {logger} from '@orion-js/logger'
 import {env} from '@orion-js/env'
 
-const routes = {
-  ...components,
-  home,
-  healthCheck,
+export default function startHttp(routes: RoutesMap) {
+  registerRoutes({
+    ...routes,
+    home,
+    healthCheck,
+  })
+  startServer()
+  logger.info(`Server started at port ${env.http_port}`)
 }
-
-registerRoutes(routes)
-startServer()
-logger.info(`Server started at port ${env.http_port}`)

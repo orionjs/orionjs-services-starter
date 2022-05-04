@@ -1,6 +1,6 @@
 import {Inject, Service} from '@orion-js/services'
-import {ExampleRepository} from 'app/repos/Example'
-import {ExampleSchema} from 'app/schemas/ExampleSchema'
+import {ExampleRepository} from '../../repos/Example'
+import {ExampleSchema} from '../../schemas/ExampleSchema'
 
 @Service()
 export class ExampleService {

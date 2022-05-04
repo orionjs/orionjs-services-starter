@@ -1,5 +1,3 @@
 import ExampleRoutes from './ExampleRoutes'
 
-export default {
-  ...ExampleRoutes,
-}
+export default [ExampleRoutes]

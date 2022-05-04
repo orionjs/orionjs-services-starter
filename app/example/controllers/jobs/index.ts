@@ -1,5 +1,3 @@
 import ExampleJobs from './ExampleJobs'
 
-export default {
-  ...ExampleJobs,
-}
+export default [ExampleJobs]

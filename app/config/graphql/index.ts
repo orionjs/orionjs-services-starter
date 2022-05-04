@@ -1,12 +1,15 @@
-import {resolversSchemas, startGraphQL} from '@orion-js/graphql'
-import resolvers from 'app/controllers/resolvers'
-import modelsResolvers from 'app/controllers/models'
+import {
+  resolversSchemas,
+  startGraphQL as orionStartGraphQL,
+} from '@orion-js/graphql'
 
-startGraphQL({
-  resolvers: {
-    ...resolvers,
-    ...resolversSchemas,
-  },
-  modelsResolvers,
-  useGraphiql: !!process.env.ORION_DEV, // show graphiql only in dev
-})
+export default function startGraphQL(resolvers, modelsResolvers) {
+  orionStartGraphQL({
+    resolvers: {
+      ...resolvers,
+      ...resolversSchemas,
+    },
+    modelsResolvers,
+    useGraphiql: !!process.env.ORION_DEV, // show graphiql only in dev
+  })
+}
