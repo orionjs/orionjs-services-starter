@@ -4,11 +4,11 @@ import startGraphQL from './config/graphql'
 import startHttp from './config/http'
 import startJobs from './config/jobs'
 import {mergeComponents} from '@orion-js/components'
-import example from './example'
+import exampleComponent from './exampleComponent'
 
 async function startApp() {
   const {echoes, resolvers, modelResolvers, routes, jobs} = mergeComponents([
-    example,
+    exampleComponent,
   ])
 
   startEchoes(echoes)
