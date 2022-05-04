@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "orion start",
     "build": "yarn install && orion build",
-    "start:prod": "node build/index.js",
+    "start": "node build/index.js",
     "test": "jest"
   },
   "dependencies": {

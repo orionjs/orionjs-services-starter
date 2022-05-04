@@ -2,7 +2,7 @@ import {startService} from '@orion-js/echoes'
 import echoes from 'app/controllers/echoes'
 import {services} from './services'
 import logCreator from './logCreator'
-import {env} from '@orion-js/env'
+// import {env} from '@orion-js/env'
 import {logger} from '@orion-js/logger'
 
 const brokers = process.env.KAFKA_BROKERS
@@ -23,8 +23,8 @@ if (brokers.length) {
     },
     producer: {},
     requests: {
-      key: env.echoes_password,
-      services: services,
+      key: 'set a strong password here', // env.echoes_password,
+      services,
     },
     echoes,
   })
