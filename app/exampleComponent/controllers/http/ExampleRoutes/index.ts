@@ -6,7 +6,7 @@ import {
   Routes,
 } from '@orion-js/http'
 import {Inject} from '@orion-js/services'
-import {ExampleService} from 'app/example/services/ExampleService'
+import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 
 @Routes()
 export default class ExampleRoutes {

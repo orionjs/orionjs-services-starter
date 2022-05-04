@@ -1,7 +1,7 @@
 import {Jobs, RecurrentJob} from '@orion-js/dogs'
 import {logger} from '@orion-js/logger'
 import {Inject} from '@orion-js/services'
-import {ExampleService} from 'app/example/services/ExampleService'
+import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 
 @Jobs()
 export default class ExampleJobs {

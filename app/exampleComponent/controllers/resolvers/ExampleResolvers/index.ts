@@ -1,8 +1,8 @@
 import {Mutation, Query, Resolvers} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
 import {Prop, TypedSchema} from '@orion-js/typed-model'
-import {ExampleSchema} from 'app/example/schemas/ExampleSchema'
-import {ExampleService} from 'app/example/services/ExampleService'
+import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
+import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 
 @TypedSchema()
 export class ExampleParams {
