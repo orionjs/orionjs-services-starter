@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@orion-js/cache": "^3.2.0",
+    "@orion-js/components": "^3.2.17",
     "@orion-js/crypto": "3.2.12",
     "@orion-js/dogs": "^3.2.15",
     "@orion-js/echoes": "^3.2.11",
     "@orion-js/env": "^3.2.0",
-    "@orion-js/graphql": "^3.2.11",
+    "@orion-js/graphql": "^3.2.16",
     "@orion-js/helpers": "3.2.0",
     "@orion-js/http": "^3.2.11",
     "@orion-js/logger": "^3.2.0",

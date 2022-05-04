@@ -5,13 +5,13 @@ import {ExampleSchema} from 'app/example/schemas/ExampleSchema'
 import {ExampleService} from 'app/example/services/ExampleService'
 
 @TypedSchema()
-export default class ExampleParams {
+export class ExampleParams {
   @Prop()
   exampleId: string
 }
 
 @Resolvers()
-export class ExampleResolvers {
+export default class ExampleResolvers {
   @Inject()
   private exampleService: ExampleService
 
