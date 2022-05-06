@@ -1,5 +1,5 @@
 import {Collection, MongoCollection, Repository} from '@orion-js/mongodb'
-import {ExampleSchema} from '../../schemas/ExampleSchema'
+import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
 
 @Repository()
 export class ExampleRepository {

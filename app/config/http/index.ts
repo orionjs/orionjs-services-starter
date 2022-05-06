@@ -10,6 +10,6 @@ export default function startHttp(routes: RoutesMap) {
     home,
     healthCheck,
   })
-  startServer()
+  startServer(Number(env.http_port))
   logger.info(`Server started at port ${env.http_port}`)
 }
