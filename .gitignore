@@ -2,7 +2,7 @@
 node_modules
 yarn-error.log
 build.sh
-start-prod.sh
+# start-prod.sh
 start-dev.sh
 **/.DS_Store
 build

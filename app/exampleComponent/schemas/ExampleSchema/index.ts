@@ -1,19 +1,19 @@
-import {createEnum} from '@orion-js/schema'
-import {Prop, TypedSchema} from '@orion-js/typed-model'
+import {TypedId, typedId} from '@orion-js/mongodb'
+import {createEnum, InferSchemaType, schemaWithName} from '@orion-js/schema'
 
-export const ExampleTypeEnum = createEnum('ExampleTypeEnum', ['type1', 'type2', 'type3'] as const)
+export const PaymentMethodEnum = createEnum('PaymentMethodEnum', [
+  'type1',
+  'type2',
+  'type3',
+] as const)
 
-@TypedSchema()
-export class ExampleSchema {
-  @Prop({type: String})
-  _id: string
+export type ExampleId = TypedId<'ex'>
 
-  @Prop({type: String})
-  name: string
+export const ExampleSchema = schemaWithName('ExampleSchema', {
+  _id: {type: typedId('ex')},
+  name: {type: String},
+  createdAt: {type: Date},
+  paymentMethod: {type: PaymentMethodEnum, optional: true},
+})
 
-  @Prop({type: Date})
-  createdAt: Date
-
-  @Prop({optional: true, type: ExampleTypeEnum})
-  paymentMethod?: typeof ExampleTypeEnum.type
-}
+export type ExampleType = InferSchemaType<typeof ExampleSchema>

@@ -10,7 +10,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "./.orion/build/app",
-    "baseUrl": "./"
-  }
+    "baseUrl": "./",
+  },
 }

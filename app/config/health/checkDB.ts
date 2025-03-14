@@ -5,5 +5,5 @@ export async function checkDB() {
   const connection = getMongoConnection({name: 'main'})
   await connection.connectionPromise
 
-  await jobsRepo.jobs().findOne()
+  await jobsRepo.jobs.findOne()
 }

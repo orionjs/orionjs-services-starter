@@ -1,11 +1,11 @@
 import {Collection, MongoCollection, Repository} from '@orion-js/mongodb'
-import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
+import {ExampleId, ExampleSchema, ExampleType} from 'app/exampleComponent/schemas/ExampleSchema'
 
 @Repository()
 export class ExampleRepository {
   @MongoCollection({
     name: 'examples',
-    model: ExampleSchema,
+    schema: ExampleSchema,
     indexes: [
       {
         keys: {
@@ -14,13 +14,13 @@ export class ExampleRepository {
       },
     ],
   })
-  private exampleCollection: Collection<ExampleSchema>
+  private exampleCollection: Collection<ExampleType>
 
-  async getExampleById(id: string): Promise<ExampleSchema> {
+  async getExampleById(id: ExampleId): Promise<ExampleType> {
     return await this.exampleCollection.findOne({_id: id})
   }
 
-  async getAllExamples(): Promise<ExampleSchema[]> {
+  async getAllExamples(): Promise<ExampleType[]> {
     return await this.exampleCollection.find().sort({createdAt: -1}).toArray()
   }
 

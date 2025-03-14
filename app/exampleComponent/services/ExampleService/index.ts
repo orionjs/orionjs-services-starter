@@ -1,17 +1,17 @@
 import {Inject, Service} from '@orion-js/services'
 import {ExampleRepository} from 'app/exampleComponent/repos/Example'
-import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
+import {ExampleId, ExampleType} from 'app/exampleComponent/schemas/ExampleSchema'
 
 @Service()
 export class ExampleService {
   @Inject(() => ExampleRepository)
   private exampleRepository: ExampleRepository
 
-  async getAExample(id: string): Promise<ExampleSchema> {
+  async getAExample(id: ExampleId): Promise<ExampleType> {
     return await this.exampleRepository.getExampleById(id)
   }
 
-  async getExamples(): Promise<ExampleSchema[]> {
+  async getExamples(): Promise<ExampleType[]> {
     return await this.exampleRepository.getAllExamples()
   }
 
