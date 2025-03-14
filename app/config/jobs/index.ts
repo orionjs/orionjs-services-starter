@@ -1,6 +1,6 @@
 import {JobsDefinition, startWorkers} from '@orion-js/dogs'
 import {logger} from '@orion-js/logger'
-import {isEmpty} from 'lodash'
+import {isEmpty} from 'lodash-es'
 
 export default function startJobs(jobs: JobsDefinition) {
   if (isEmpty(jobs)) return

@@ -1,15 +1,15 @@
-import { EchoRequest, Echoes } from '@orion-js/echoes'
-import { Inject } from '@orion-js/services'
-import { ExampleRepository } from 'app/exampleComponent/repos/Example'
-import { ExampleSchema } from 'app/exampleComponent/schemas/ExampleSchema'
+import {EchoRequest, Echoes} from '@orion-js/echoes'
+import {Inject} from '@orion-js/services'
+import {ExampleRepository} from 'app/exampleComponent/repos/Example'
+import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
 
 @Echoes()
 export class GetDataEchoes {
-  @Inject()
+  @Inject(() => ExampleRepository)
   private exampleRepository: ExampleRepository
 
   @EchoRequest()
-  async getDataById(params: { exampleId: string }): Promise<ExampleSchema> {
+  async getDataById(params: {exampleId: string}): Promise<ExampleSchema> {
     return await this.exampleRepository.getExampleById(params.exampleId)
   }
 }

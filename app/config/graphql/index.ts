@@ -6,7 +6,7 @@ import {
 } from '@orion-js/graphql'
 import {logger} from '@orion-js/logger'
 import {GlobalResolversMap} from '@orion-js/models'
-import {isEmpty} from 'lodash'
+import {isEmpty} from 'lodash-es'
 
 export default function startGraphQL(
   resolvers: GlobalResolversMap,

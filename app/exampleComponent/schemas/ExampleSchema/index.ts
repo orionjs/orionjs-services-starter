@@ -1,25 +1,19 @@
-import { createEnum } from '@orion-js/schema'
-import { Prop, TypedSchema } from '@orion-js/typed-model'
+import {createEnum} from '@orion-js/schema'
+import {Prop, TypedSchema} from '@orion-js/typed-model'
 
-
-export const ExampleTypeEnum = createEnum('ExampleTypeEnum', [
-  'type1',
-  'type2',
-  'type3',
-] as const)
+export const ExampleTypeEnum = createEnum('ExampleTypeEnum', ['type1', 'type2', 'type3'] as const)
 
 @TypedSchema()
 export class ExampleSchema {
-  @Prop()
+  @Prop({type: String})
   _id: string
 
-  @Prop()
+  @Prop({type: String})
   name: string
 
-  @Prop()
+  @Prop({type: Date})
   createdAt: Date
 
-  @Prop({ optional: true, type: ExampleTypeEnum })
+  @Prop({optional: true, type: ExampleTypeEnum})
   paymentMethod?: typeof ExampleTypeEnum.type
-
 }

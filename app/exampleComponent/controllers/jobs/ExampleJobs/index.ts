@@ -5,7 +5,7 @@ import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 
 @Jobs()
 export default class ExampleJobs {
-  @Inject()
+  @Inject(() => ExampleService)
   private exampleService: ExampleService
 
   @RecurrentJob({

@@ -1,25 +1,16 @@
 {
-	"compilerOptions": {
-    "strict": true,
-
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "target": "ESNext",
     "rootDir": "./app",
-
-		// Treat files as modules even if it doesn't use import/export
-		"moduleDetection": "force",
-
-		// Ignore module structure
-		"module": "Preserve",
-
-		// Allow JSON modules to be imported
-		"resolveJsonModule": true,
-
-		// Allow JS files to be imported from TS and vice versa
-		"allowJs": true,
-
-		// Use correct ESM import behavior
-		"esModuleInterop": true,
-
-		// Disallow features that require cross-file awareness
-		"isolatedModules": true,
-	},
+    "moduleDetection": "force",
+    "module": "Preserve",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "outDir": "./.orion/build/app",
+    "baseUrl": "./"
+  }
 }

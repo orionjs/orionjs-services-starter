@@ -4,14 +4,14 @@ import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 
 @Routes()
 export default class ExampleRoutes {
-  @Inject()
+  @Inject(() => ExampleService)
   private exampleService: ExampleService
 
   @Route({
     path: '/example/:exampleId',
     method: 'get',
   })
-  async example(req: Request): RouteResponse {
+  async example(req: Request): Promise<RouteResponse> {
     const {exampleId} = req.params
     return {
       body: await this.exampleService.getAExample(exampleId),
