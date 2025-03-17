@@ -8,18 +8,15 @@ importers:
 
   .:
     dependencies:
-      '@orion-js/cache':
-        specifier: 4.0.0-next.8
-        version: 4.0.0-next.8
       '@orion-js/components':
-        specifier: 4.0.1
-        version: 4.0.1(@orion-js/dogs@4.0.1(@orion-js/logger@4.0.0))(@orion-js/echoes@4.0.1)(@orion-js/graphql@4.0.1(graphql@16.10.0))(@orion-js/helpers@4.0.0)(@orion-js/http@4.0.1)(@orion-js/models@4.0.0)(@orion-js/mongodb@4.0.1)(@orion-js/services@4.0.0)
+        specifier: 4.0.3
+        version: 4.0.3(@orion-js/dogs@4.0.2(@orion-js/logger@4.0.1))(@orion-js/echoes@4.0.1)(@orion-js/graphql@4.0.2(graphql@16.10.0))(@orion-js/helpers@4.0.0)(@orion-js/http@4.0.1)(@orion-js/models@4.0.0)(@orion-js/mongodb@4.0.2)(@orion-js/services@4.0.0)
       '@orion-js/crypto':
         specifier: 4.0.0
         version: 4.0.0
       '@orion-js/dogs':
-        specifier: 4.0.1
-        version: 4.0.1(@orion-js/logger@4.0.0)
+        specifier: 4.0.2
+        version: 4.0.2(@orion-js/logger@4.0.1)
       '@orion-js/echoes':
         specifier: 4.0.1
         version: 4.0.1
@@ -27,8 +24,8 @@ importers:
         specifier: 4.0.1
         version: 4.0.1
       '@orion-js/graphql':
-        specifier: 4.0.1
-        version: 4.0.1(graphql@16.10.0)
+        specifier: 4.0.2
+        version: 4.0.2(graphql@16.10.0)
       '@orion-js/helpers':
         specifier: 4.0.0
         version: 4.0.0
@@ -36,20 +33,20 @@ importers:
         specifier: 4.0.1
         version: 4.0.1
       '@orion-js/logger':
-        specifier: 4.0.0
-        version: 4.0.0
-      '@orion-js/migrations':
         specifier: 4.0.1
         version: 4.0.1
+      '@orion-js/migrations':
+        specifier: 4.0.2
+        version: 4.0.2
       '@orion-js/models':
         specifier: 4.0.0
         version: 4.0.0
       '@orion-js/mongodb':
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.2
+        version: 4.0.2
       '@orion-js/paginated-mongodb':
-        specifier: 4.0.1
-        version: 4.0.1(graphql@16.10.0)
+        specifier: 4.0.3
+        version: 4.0.3(graphql@16.10.0)
       '@orion-js/resolvers':
         specifier: 4.0.0
         version: 4.0.0
@@ -73,8 +70,8 @@ importers:
         specifier: ^1.9.4
         version: 1.9.4
       '@orion-js/core':
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.3
+        version: 4.0.3(tsx@4.19.3)
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -90,6 +87,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.26.1
         version: 8.26.1(eslint@9.22.0)(typescript@5.8.2)
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -506,33 +506,32 @@ packages:
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
 
-  '@orion-js/cache@4.0.0-next.8':
-    resolution: {integrity: sha512-ldyLc8ihtHvYuHBBQUCZKugT8Cg8Kej0E08W6610f6MOQtoCXEBe3Srxoz63GD7jHUCRG/vFlqU++fhTr+aL8g==}
-
-  '@orion-js/components@4.0.1':
-    resolution: {integrity: sha512-MVSUSuDK/2CGWGKsOrItWIKmIa3c5Uti0iKrV4aexBf4uJ1LAdSPu6wx2Rp2EuOTzbFBst323xPkC6Q6eKwAlw==}
+  '@orion-js/components@4.0.3':
+    resolution: {integrity: sha512-5QLPDKP3907YiP64m1Z8L6YaL2y/Oc7QhNUr6zMwVr3N4OvJ12gRWyWPtBOSYZeU5mKf/dnRAo2u6LY//Tn7Ww==}
     peerDependencies:
-      '@orion-js/dogs': 4.0.1
+      '@orion-js/dogs': 4.0.2
       '@orion-js/echoes': 4.0.1
-      '@orion-js/graphql': 4.0.1
+      '@orion-js/graphql': 4.0.2
       '@orion-js/helpers': 4.0.0
       '@orion-js/http': 4.0.1
       '@orion-js/models': 4.0.0
-      '@orion-js/mongodb': 4.0.1
+      '@orion-js/mongodb': 4.0.2
       '@orion-js/services': 4.0.0
 
-  '@orion-js/core@4.0.1':
-    resolution: {integrity: sha512-el/e9zcyAQUA+7uPimuZp9Fdgc3cwVdNmV6MsGBTtzBFeDjkGXz8RJk794XBy2ECPuncH+2RJikoSOFkyQpVPw==}
+  '@orion-js/core@4.0.3':
+    resolution: {integrity: sha512-P86FD+g5EibYS02HCyQmeNlGesjbvcTvI1+gsLU9Sivht0Mx6324nYFN3ODHX/GNFpb2QWN8zpXljYyz0b6caA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
+    peerDependencies:
+      tsx: '*'
 
   '@orion-js/crypto@4.0.0':
     resolution: {integrity: sha512-v1iOAUmAbxVusBM/HBeewMx8Qh3CZ7LsZN27lrnWHPpevsnVEn3SPlALiFKxQTJAEl1QKzFt6t3W9jF/mMCDYg==}
 
-  '@orion-js/dogs@4.0.1':
-    resolution: {integrity: sha512-APn+6dXD7staxWdidLVYmj4N8EkeqnFuvlh5HATZ/nnXzjDGeRBXHphg9QUxmFD2AOTpi1VkKRjvj7IEZwTBpA==}
+  '@orion-js/dogs@4.0.2':
+    resolution: {integrity: sha512-0szalSOybR+kgQxG0yCWVNhrkV9Gx6FZwAuCc7SORvDZZzXd4R9wHP/CCXwnuxAaJ6xBXtDhY5HOfUC1Vy6dyg==}
     peerDependencies:
-      '@orion-js/logger': 4.0.0
+      '@orion-js/logger': 4.0.1
 
   '@orion-js/echoes@4.0.1':
     resolution: {integrity: sha512-8kPUX7TLS8l+qS1C/cd7d+GZdI65d75K7tUp+/Dq4tiaWgbXLqx1/Vv7/IYpSnfITjhTCnjdLE/QP7rqp6itkw==}
@@ -541,34 +540,31 @@ packages:
     resolution: {integrity: sha512-q/Obs0OWJl2NgPv7zc9lvzyfBUAA2NbLXvYkPxuQT5OTGTYV4QsLm17EFCktOsBa9sj5zUS6c+LTgKKEiyzTcw==}
     hasBin: true
 
-  '@orion-js/graphql@4.0.1':
-    resolution: {integrity: sha512-qn4TRGwPkjaYwoRPlbdBNExKxxyvF+AgtUNti03QrqP9BBrBF1Su2Zoo+IqUdpKEiRZ+k2iEushKMNa8ZlZPWw==}
+  '@orion-js/graphql@4.0.2':
+    resolution: {integrity: sha512-Gz8mKyv9/go73Voq2R241+C3hYhNXvf51hBpfbuMp7IWSnZVLuNoz9iBhZhu7zz2YYAEi+m4PDdL/G9XRNz1lg==}
     peerDependencies:
       graphql: '*'
 
   '@orion-js/helpers@4.0.0':
     resolution: {integrity: sha512-XjSJ+cNKTok6rHc5WBUNxjZ8+rUpZJMzAbo7BbZNcw6vQG5M5T1wexq4Nyeqd2Mnyul/rgPMmdjIbOrPdjaasg==}
 
-  '@orion-js/helpers@4.0.0-next.8':
-    resolution: {integrity: sha512-bIiW9Z8oMUcif+raWtPJz/1kSDdEUfysEfO17XFFtvEpMeKB9rBK8StSkiQEQNFNp9sGsZiIh7TckPaq3VsVeQ==}
-
   '@orion-js/http@4.0.1':
     resolution: {integrity: sha512-Bsfe7pAnqnQdkyH9OC+UNLHk921xkS4uUlKldrb1jBI3LXtZRtF3yH7MuhQHEPvZNfl4kyF8XTtuN/uz3Q6g2w==}
 
-  '@orion-js/logger@4.0.0':
-    resolution: {integrity: sha512-ddDJh1/eD/LlKwyFtPUCPewAGt7Nm8wjR2L6hd7a2EobDNa3DdAvS01K7z2Oiva1ey5kgI3QcHHukO13BN4BgQ==}
+  '@orion-js/logger@4.0.1':
+    resolution: {integrity: sha512-qEvJ8+gvj6EzB5n1coRybe5R8q9hSAW0da03ixvhToo0LBSBZNkZHiaiyILVurF5qOFVODtdI927AuIxKyaqZg==}
 
-  '@orion-js/migrations@4.0.1':
-    resolution: {integrity: sha512-gdXxCmCpShs9N5MCE6dRXKmZeOxZPgQ4AGkH71twEUrkJt+E1RLsc+dXErAUZm8A54BM0RP5pdFsDm3ZinGlaQ==}
+  '@orion-js/migrations@4.0.2':
+    resolution: {integrity: sha512-nUL4wKEI4DujHUgq3G8J8M4KZGMphc/QMhUZZRpaOPQ0PYATNDozEZrdPo3UiNlwISPF59zVTJ805dArHAxwpA==}
 
   '@orion-js/models@4.0.0':
     resolution: {integrity: sha512-rftTUnz9U0+zpUr/SRoBVswcLChGnX7k+N+9a+t7raOBLhH2r+C2K3+ZQPmHebdARjqAv2IENsLz2TDR7aOGWA==}
 
-  '@orion-js/mongodb@4.0.1':
-    resolution: {integrity: sha512-UO2X+a659zwSkOwaG2d8e2QbRNmeACOTsW6RDHBdvQBJOc6YGbmcXhEoz3e/7Ci0DdGWV1hbwvpcrvvQRYEqGA==}
+  '@orion-js/mongodb@4.0.2':
+    resolution: {integrity: sha512-cAU4kdymAIgPQMpaXWU8TTvdMn/x4/hbmst3rKYHpX1HBSiX8wLIMo8E6SP9zN8H2HtHPTGGzaS2En/ljgLnEw==}
 
-  '@orion-js/paginated-mongodb@4.0.1':
-    resolution: {integrity: sha512-WOW70r10/neGePyglX5ny0G2wa/GqdalfydwXF+nm03jNlTdXWnb+CGg+fyvJGrJbs84vOV0ns+Z7w+f/d/aYw==}
+  '@orion-js/paginated-mongodb@4.0.3':
+    resolution: {integrity: sha512-otH/xndepCHWEsi1TQ/p0G9YLj3GSzqZrjOiGhCV9Q0dRLAUO6Dh1GqaxG8Lsm4oD++N5Q1MAbwR2fZgw4kzLw==}
 
   '@orion-js/resolvers@4.0.0':
     resolution: {integrity: sha512-lZlYqWZSAyxS0a+1u/GsUEoIcyl/t40HM7GOnV2aQqpxMte1/HLQkGcd0upSmWhFrTTpnBEnnfUKhdT2BByR8g==}
@@ -1207,11 +1203,6 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
-
-  graphql-iso-date@3.6.1:
-    resolution: {integrity: sha512-AwFGIuYMJQXOEAgRlJlFL4H1ncFM8n8XmoVDTNypNOZyQ8LFDG2ppMFlsS862BSTCDcSUfHp8PD3/uJhv7t59Q==}
-    peerDependencies:
-      graphql: ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0-b || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0
 
   graphql-scalars@1.24.1:
     resolution: {integrity: sha512-3L553TMPh3YpHQM4x9G4tXcyD+AX8QQOYA6tUn1nrNiWEXE0JfAnWdjoe3WGxRuGjnZrzvHDz62q8S+sSGXXwA==}
@@ -2261,22 +2252,18 @@ snapshots:
 
   '@opentelemetry/api@1.9.0': {}
 
-  '@orion-js/cache@4.0.0-next.8':
+  '@orion-js/components@4.0.3(@orion-js/dogs@4.0.2(@orion-js/logger@4.0.1))(@orion-js/echoes@4.0.1)(@orion-js/graphql@4.0.2(graphql@16.10.0))(@orion-js/helpers@4.0.0)(@orion-js/http@4.0.1)(@orion-js/models@4.0.0)(@orion-js/mongodb@4.0.2)(@orion-js/services@4.0.0)':
     dependencies:
-      '@orion-js/helpers': 4.0.0-next.8
-
-  '@orion-js/components@4.0.1(@orion-js/dogs@4.0.1(@orion-js/logger@4.0.0))(@orion-js/echoes@4.0.1)(@orion-js/graphql@4.0.1(graphql@16.10.0))(@orion-js/helpers@4.0.0)(@orion-js/http@4.0.1)(@orion-js/models@4.0.0)(@orion-js/mongodb@4.0.1)(@orion-js/services@4.0.0)':
-    dependencies:
-      '@orion-js/dogs': 4.0.1(@orion-js/logger@4.0.0)
+      '@orion-js/dogs': 4.0.2(@orion-js/logger@4.0.1)
       '@orion-js/echoes': 4.0.1
-      '@orion-js/graphql': 4.0.1(graphql@16.10.0)
+      '@orion-js/graphql': 4.0.2(graphql@16.10.0)
       '@orion-js/helpers': 4.0.0
       '@orion-js/http': 4.0.1
       '@orion-js/models': 4.0.0
-      '@orion-js/mongodb': 4.0.1
+      '@orion-js/mongodb': 4.0.2
       '@orion-js/services': 4.0.0
 
-  '@orion-js/core@4.0.1':
+  '@orion-js/core@4.0.3(tsx@4.19.3)':
     dependencies:
       '@orion-js/env': 4.0.1
       chalk: 4.1.2
@@ -2295,12 +2282,12 @@ snapshots:
       bcryptjs: 2.4.3
       tweetnacl-es6: 1.0.3
 
-  '@orion-js/dogs@4.0.1(@orion-js/logger@4.0.0)':
+  '@orion-js/dogs@4.0.2(@orion-js/logger@4.0.1)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@orion-js/helpers': 4.0.0
-      '@orion-js/logger': 4.0.0
-      '@orion-js/mongodb': 4.0.1
+      '@orion-js/logger': 4.0.1
+      '@orion-js/mongodb': 4.0.2
       '@orion-js/schema': 4.0.0
       '@orion-js/services': 4.0.0
       '@orion-js/typed-model': 4.0.0
@@ -2339,7 +2326,7 @@ snapshots:
       tweetnacl-es6: 1.0.3
       yaml: 2.7.0
 
-  '@orion-js/graphql@4.0.1(graphql@16.10.0)':
+  '@orion-js/graphql@4.0.2(graphql@16.10.0)':
     dependencies:
       '@apollo/server': 4.11.3(graphql@16.10.0)
       '@graphql-tools/schema': 9.0.19(graphql@16.10.0)
@@ -2352,7 +2339,6 @@ snapshots:
       '@orion-js/services': 4.0.0
       '@orion-js/typed-model': 4.0.0
       graphql: 16.10.0
-      graphql-iso-date: 3.6.1(graphql@16.10.0)
       graphql-scalars: 1.24.1(graphql@16.10.0)
       graphql-subscriptions: 2.0.0(graphql@16.10.0)
       graphql-tag: 2.12.6(graphql@16.10.0)
@@ -2369,10 +2355,6 @@ snapshots:
     dependencies:
       uuid: 11.1.0
 
-  '@orion-js/helpers@4.0.0-next.8':
-    dependencies:
-      uuid: 11.1.0
-
   '@orion-js/http@4.0.1':
     dependencies:
       '@orion-js/env': 4.0.1
@@ -2385,19 +2367,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@orion-js/logger@4.0.0':
+  '@orion-js/logger@4.0.1':
     dependencies:
       '@opentelemetry/api': 1.9.0
       color: 4.2.3
       text-hex: 1.0.0
       winston: 3.17.0
 
-  '@orion-js/migrations@4.0.1':
+  '@orion-js/migrations@4.0.2':
     dependencies:
-      '@orion-js/dogs': 4.0.1(@orion-js/logger@4.0.0)
+      '@orion-js/dogs': 4.0.2(@orion-js/logger@4.0.1)
       '@orion-js/helpers': 4.0.0
-      '@orion-js/logger': 4.0.0
-      '@orion-js/mongodb': 4.0.1
+      '@orion-js/logger': 4.0.1
+      '@orion-js/mongodb': 4.0.2
       '@orion-js/schema': 4.0.0
       '@orion-js/services': 4.0.0
       '@orion-js/typed-model': 4.0.0
@@ -2416,11 +2398,11 @@ snapshots:
       '@orion-js/resolvers': 4.0.0
       '@orion-js/schema': 4.0.0
 
-  '@orion-js/mongodb@4.0.1':
+  '@orion-js/mongodb@4.0.2':
     dependencies:
       '@orion-js/env': 4.0.1
       '@orion-js/helpers': 4.0.0
-      '@orion-js/logger': 4.0.0
+      '@orion-js/logger': 4.0.1
       '@orion-js/models': 4.0.0
       '@orion-js/resolvers': 4.0.0
       '@orion-js/schema': 4.0.0
@@ -2439,12 +2421,12 @@ snapshots:
       - snappy
       - socks
 
-  '@orion-js/paginated-mongodb@4.0.1(graphql@16.10.0)':
+  '@orion-js/paginated-mongodb@4.0.3(graphql@16.10.0)':
     dependencies:
-      '@orion-js/graphql': 4.0.1(graphql@16.10.0)
+      '@orion-js/graphql': 4.0.2(graphql@16.10.0)
       '@orion-js/helpers': 4.0.0
       '@orion-js/models': 4.0.0
-      '@orion-js/mongodb': 4.0.1
+      '@orion-js/mongodb': 4.0.2
       '@orion-js/resolvers': 4.0.0
       '@orion-js/schema': 4.0.0
       '@orion-js/services': 4.0.0
@@ -3211,10 +3193,6 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphemer@1.4.0: {}
-
-  graphql-iso-date@3.6.1(graphql@16.10.0):
-    dependencies:
-      graphql: 16.10.0
 
   graphql-scalars@1.24.1(graphql@16.10.0):
     dependencies:

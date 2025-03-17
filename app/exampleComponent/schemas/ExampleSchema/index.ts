@@ -10,10 +10,19 @@ export const PaymentMethodEnum = createEnum('PaymentMethodEnum', [
 export type ExampleId = TypedId<'ex'>
 
 export const ExampleSchema = schemaWithName('ExampleSchema', {
-  _id: {type: typedId('ex')},
-  name: {type: String},
-  createdAt: {type: Date},
-  paymentMethod: {type: PaymentMethodEnum, optional: true},
+  _id: {
+    type: typedId('ex'),
+  },
+  name: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+  },
+  paymentMethod: {
+    type: PaymentMethodEnum,
+    optional: true,
+  },
 })
 
 export type ExampleType = InferSchemaType<typeof ExampleSchema>

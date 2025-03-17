@@ -7,19 +7,19 @@
     "test": "jest"
   },
   "dependencies": {
-    "@orion-js/components": "4.0.1",
+    "@orion-js/components": "4.0.3",
     "@orion-js/crypto": "4.0.0",
-    "@orion-js/dogs": "4.0.1",
+    "@orion-js/dogs": "4.0.2",
     "@orion-js/echoes": "4.0.1",
     "@orion-js/env": "4.0.1",
-    "@orion-js/graphql": "4.0.1",
+    "@orion-js/graphql": "4.0.2",
     "@orion-js/helpers": "4.0.0",
     "@orion-js/http": "4.0.1",
-    "@orion-js/logger": "4.0.0",
-    "@orion-js/migrations": "4.0.1",
+    "@orion-js/logger": "4.0.1",
+    "@orion-js/migrations": "4.0.2",
     "@orion-js/models": "4.0.0",
-    "@orion-js/mongodb": "4.0.1",
-    "@orion-js/paginated-mongodb": "4.0.1",
+    "@orion-js/mongodb": "4.0.2",
+    "@orion-js/paginated-mongodb": "4.0.3",
     "@orion-js/resolvers": "4.0.0",
     "@orion-js/schema": "4.0.0",
     "@orion-js/services": "4.0.0",
@@ -32,12 +32,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@orion-js/core": "4.0.1",
+    "@orion-js/core": "4.0.3",
     "@types/jest": "^29.5.14",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.13.10",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }
 }
