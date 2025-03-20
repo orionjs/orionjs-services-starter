@@ -1,7 +1,7 @@
 import {Mutation, Query, Resolvers, createMutation, createQuery} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
 import {schemaWithName} from '@orion-js/schema'
-import {ExampleId, ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
+import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
 import {ExampleService} from 'app/exampleComponent/services/ExampleService'
 import {typedId} from '@orion-js/mongodb'
 
@@ -18,7 +18,7 @@ export default class ExampleResolvers {
   example = createQuery({
     params: ExampleParams,
     returns: ExampleSchema,
-    resolve: async (params: {exampleId: ExampleId}) => {
+    resolve: async params => {
       return await this.exampleService.getAExample(params.exampleId)
     },
   })
