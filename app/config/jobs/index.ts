@@ -5,9 +5,13 @@ import {isEmpty} from 'lodash-es'
 export default function startJobs(jobs: JobsDefinition) {
   if (isEmpty(jobs)) return
   startWorkers({
-    lockTime: 60 * 1000,
+    defaultLockTime: 60 * 1000,
     workersCount: 5,
+    maxTries: 3,
     jobs,
+    onMaxTriesReached: async job => {
+      logger.error(`Job ${job.name} reached max tries`)
+    },
   })
   logger.info('Jobs started ✅')
 }

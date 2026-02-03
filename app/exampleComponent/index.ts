@@ -4,6 +4,7 @@ import routes from './controllers/http'
 import jobs from './controllers/jobs'
 import modelResolvers from './controllers/modelResolvers'
 import resolvers from './controllers/resolvers'
+import trpc from './controllers/trpc'
 
 export default component({
   echoes,
@@ -11,4 +12,5 @@ export default component({
   jobs,
   modelResolvers,
   resolvers,
+  trpc,
 })
