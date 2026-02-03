@@ -1,18 +1,14 @@
-import {startTRPC} from '@orion-js/trpc'
-import {TRPCRouterRecord} from '@trpc/server'
+import {startTRPCWithRouter} from '@orion-js/trpc'
 import {logger} from '@orion-js/logger'
+import {appRouter} from 'app/router'
 
-export default async function startTrpc(procedures: TRPCRouterRecord) {
-  if (!procedures || Object.keys(procedures).length === 0) {
-    return {router: undefined}
-  }
-
-  const {router} = await startTRPC({
-    procedures,
+export default async function startTrpc() {
+  await startTRPCWithRouter({
+    router: appRouter,
     path: '/trpc',
   })
 
   logger.info('tRPC started at /trpc')
 
-  return {router}
+  return {router: appRouter}
 }
