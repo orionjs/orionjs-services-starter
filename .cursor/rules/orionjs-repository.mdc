@@ -1,13 +1,15 @@
 ---
 description: How to create a good Orionjs Repository
-globs: 
-alwaysApply: false
+globs: *.ts
+alwaysApply: true
 ---
 # How to create a good Repository
 
 ## Repository Pattern
 
 Repositories in Orionjs handle data access operations, separating data access logic from business logic. They should focus exclusively on database interactions.
+
+When asked to create a new repository, create a minimal repository, with the basic CRUD operations and no indexes.
 
 ## Structure
 - Use `@Repository()` decorator from `@orion-js/mongodb`
@@ -17,79 +19,119 @@ Repositories in Orionjs handle data access operations, separating data access lo
 
 ## Best Practices
 - Keep methods simple and focused on a single responsibility
+- **Never access the collection directly outside the repository.** All database interactions must go through repository methods. The only exception is during migrations, where direct collection access may be necessary for data transformations.
+- If you need to create a new query or a new method, always do it inside the repository file.
+- Collection name should be `component_name.prural_of_entity`. Component name is the name of the folder of the component.
 - Return plain objects or domain models, not database-specific structures
 - Use descriptive method names: `findById`, `findByEmail`, `create{EntityName}`, `update{EntityName}`, `delete{EntityName}`.
+- **NEW RULE**: Use `load` prefix instead of `get` for methods where data freshness is not guaranteed. See "Naming Convention: get vs load" section below.
 - Avoid business logic in repositories (use services instead)
 - Add proper typing for all parameters and return values.
 - Put the repository in `app/exampleComponent/repos/{EntityNameInPlural}Repo/index.ts`
 - Always use `typedId()` in schema definitions for document IDs
 - Use `InferSchemaType` to derive types from schemas
-- In `getSearchTokens` pass all text like fields to texts array and the category-like fields to the second argument.
+- IMPORTANT NEW RULE: Use read preferences for non-critical queries.
+
+## Read Preferences for Non-Critical Queries
+
+For queries that don't require strong consistency (eventually consistent reads), use the `preferSecondary` option to distribute read load across MongoDB replica set secondaries. This is especially important for:
+
+- **Aggregations**: Heavy aggregation pipelines should prefer secondary reads
+- **List queries**: Paginated lists or search results
+- **Reports and analytics**: Any read-heavy operations for dashboards or statistics
+- **Count operations**: Document counts for UI display
+
+### Naming Convention: get vs load
+
+> **⚠️ NEW RULE**: Use the **"load"** prefix instead of **"get"** for methods where data freshness is not guaranteed. The `load` prefix signals to consumers that the returned data may not reflect the most recent state of the database.
+>
+> **Migration Note**: Existing code in the project might still use "get" prefix for these methods. When you encounter methods that should use "load" based on the criteria below, suggest renaming them for consistency.
+
+**Use `load` prefix when the method:**
+- Uses `secondaryPreferred` read preference (eventually consistent reads from replica secondaries)
+- Uses DataLoader methods like `loadById`, `loadMany` (batched/deduplicated reads within request scope)
+- Reads from cache (in-memory, Redis, or any caching layer)
+
+**Use `get` prefix when the method:**
+- Reads directly from primary with no caching
+- Requires guaranteed data freshness (read-after-write scenarios)
+
+**Examples:**
+- `getCardsListCursor` → `loadCardsListCursor` (uses `secondaryPreferred`)
+- `getCardsListCount` → `loadCardsListCount` (uses `secondaryPreferred`)
+- `getCardById` → `loadCardById` (if using DataLoader or cache)
+- `getUserStats` → `loadUserStats` (if using cache or aggregation on secondary)
+
+Use `preferSecondary` by passing the option to collection methods:
+
+```typescript
+// "load" prefix: uses secondaryPreferred (data may be slightly stale)
+async loadCardsListCursor(params: CardsListQueryParamsType) {
+  const query = await this.getCardsListQuery(params)
+  return this.collection.find(query, {readPreference: 'secondaryPreferred'})
+}
+
+// "load" prefix: uses secondaryPreferred
+async loadCardsListCount(params: CardsListQueryParamsType) {
+  const query = await this.getCardsListQuery(params)
+  return this.collection.countDocuments(query, {readPreference: 'secondaryPreferred'})
+}
+
+// "load" prefix: aggregation on secondary
+async loadCardsStats() {
+  return this.collection.aggregate([
+    {$group: {_id: '$type', count: {$sum: 1}}}
+  ], {readPreference: 'secondaryPreferred'})
+}
+
+// "load" prefix: uses DataLoader (batched/deduplicated within request)
+async loadCardById(cardId: CardId) {
+  return this.collection.loadById(cardId)
+}
+```
+
+**When NOT to use `preferSecondary`:**
+- When reading data immediately after a write (use primary for read-after-write consistency)
+- For critical operations where stale data could cause issues
+- When the query result will be used to make a write decision
 
 ## Example
 
 In this example we have a `Card` entity and a `CardsRepo` repository.
 
-It's always a good idea to create at list all the methods that are in this example, but you can add more methods if you need to.
-
 ```typescript
-import {createCollection, MongoFilter, Repository, OptionalId} from '@orion-js/mongodb'
+import {createCollection, MongoFilter, Repository, OptionalId, MongoDB} from '@orion-js/mongodb'
 import {InferSchemaType} from '@orion-js/schema'
-import {CardSchema, CardType, CardId} from '../schemas/Card'
+import {CardSchema, Card, CardId} from '../schemas/Card'
 import {CardsListQueryParamsType} from './ListQueryParams'
-import {isEqual} from 'lodash-es'
-import {logger} from '@orion-js/logger'
-import {getSearchTokens, shortenMongoId} from '@orion-js/helpers'
 
 @Repository()
 export class CardsRepo {
-  private collection = createCollection({
-    name: 'cards',
+  // Collection is public only to allow access during migrations.
+  // Never access this collection directly outside this repository.
+  collection = createCollection({
+    name: 'gaming.pokemon_cards',
     schema: CardSchema,
-    indexes: [
-      {
-        keys: {
-          searchTokens: 1,
-        }
-      }
-    ],
+    indexes: [],
   })
 
-  private getSearchTokens(doc: CardType) {
-    const texts = [shortenMongoId(doc._id, doc.name)]
-    return getSearchTokens(texts, {
-      status: doc.status,
-    })
+
+  async createCard(doc: OptionalId<Card>) {
+    return await this.collection.insertAndFind(doc)
   }
 
-  async createCard(doc: Omit<CardType, '_id'>) {
-    // typedId in schema will automatically create prefixed IDs
-    doc.searchTokens = this.getSearchTokens(doc as CardType)
-    return await this.collection.insertAndFind(doc as OptionalId<CardType>)
-  }
-
+  // "get" prefix: direct read from primary, guaranteed fresh data
   async getCardById(docId: CardId) {
     return await this.collection.findOne(docId)
   }
 
-  private ensureSearchTokensAreUpdated(card: CardType) {
-    const searchTokens = this.getSearchTokens(card)
-
-    if (!isEqual(card.searchTokens, searchTokens)) {
-      this.collection
-        .updateOne(card._id, {
-          $set: {searchTokens},
-        })
-        .catch(error => {
-          logger.error('Error updating search tokens', {error, docId: card._id, searchTokens})
-        })
-    }
+  // "load" prefix: uses DataLoader (batched/deduplicated, may return cached data within request)
+  async loadCardById(docId: CardId) {
+    return await this.collection.loadById(docId)
   }
 
-  async updateCard(docId: CardId, doc: Partial<CardType>) {
-    const result = await this.collection.updateAndFind(docId, {$set: doc})
-    this.ensureSearchTokensAreUpdated(result)
-    return result
+  async updateCard(docId: CardId, doc: MongoDB.UpdateFilter<Card>['$set']) {
+    return await this.collection.updateAndFind(docId, {$set: doc})
   }
 
   async deleteCard(docId: CardId) {
@@ -97,36 +139,23 @@ export class CardsRepo {
   }
 
   private async getCardsListQuery(params: CardsListQueryParamsType) {
-    const queries: MongoFilter<CardType>[] = []
-
-    const searchTokensParams: Record<string, string> = {}
-
-    if (params.status) {
-      searchTokensParams.status = params.status
-    }
-
-    const searchTokens = getSearchQueryForTokens({
-      filter: params.filter,
-      ...searchTokensParams,
-    })
-
-    if (searchTokens.$all.length) {
-      queries.push({searchTokens})
-    }
+    const queries: MongoFilter<Card>[] = []
 
     return {
       $and: queries,
     }
   }
 
-  async getCardsListCursor(params: CardsListQueryParamsType) {
+  // "load" prefix: uses secondaryPreferred (data may be slightly stale)
+  async loadCardsListCursor(params: CardsListQueryParamsType) {
     const query = await this.getCardsListQuery(params)
-    return this.collection.find(query)
+    return this.collection.find(query, {readPreference: 'secondaryPreferred'})
   }
 
-  async getCardsListCount(params: CardsListQueryParamsType) {
+  // "load" prefix: uses secondaryPreferred
+  async loadCardsListCount(params: CardsListQueryParamsType) {
     const query = await this.getCardsListQuery(params)
-    return this.collection.countDocuments(query)
+    return this.collection.countDocuments(query, {readPreference: 'secondaryPreferred'})
   }
 }
 
@@ -135,7 +164,6 @@ import {schemaWithName, InferSchemaType} from '@orion-js/schema'
 
 export const CardsListQueryParamsSchema = schemaWithName('CardsListQueryParams', {
   filter: {type: String, optional: true},
-  status: {type: String, optional: true},
 })
 
 export type CardsListQueryParamsType = InferSchemaType<typeof CardsListQueryParamsSchema>
@@ -146,16 +174,19 @@ For this example, this could be the schema. Note the `_id` property uses `typedI
 ```typescript 
 import {schemaWithName, InferSchemaType, typedId} from '@orion-js/schema'
 
-export const CardSchema = schemaWithName('CardSchema', {
-  _id: {type: typedId('crd')},
+export const typedCardId = typedId('crd')
+export type CardId = typeof typedCardId.__tsFieldType
+
+export const CardSchema = schemaWithName('Card', {
+  _id: {type: typedCardId},
   name: {type: String},
   // ... other properties
 })
 
-export type CardType = InferSchemaType<typeof CardSchema>
+export type Card = InferSchemaType<typeof CardSchema>
 
 // The type will be inferred as:
-// type CardType = {
+// type Card = {
 //   _id: `crd-${string}`;
 //   name: string;
 //   ...
@@ -183,7 +214,3 @@ export class UserService {
   }
 }
 ```
-
-## More information
-
-Ask Orionjs documentation search MCP to get detailed information about best practices and APIs of the framework.

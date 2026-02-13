@@ -1,7 +1,7 @@
 ---
 description: How to create and use schemas effectively in Orionjs
-globs: 
-alwaysApply: false
+globs: *.ts
+alwaysApply: true
 ---
 # How to create good Schemas in Orionjs
 
@@ -43,7 +43,7 @@ export const ProductStatusEnum = createEnum('ProductStatusEnum', [
 ] as const)
 
 // Create a nested schema for product variants
-export const ProductVariantSchema = schemaWithName('ProductVariantSchema', {
+export const ProductVariantSchema = schemaWithName('ProductVariant', {
   name: {
     type: String,
     label: 'Variant Name',
@@ -61,9 +61,12 @@ export const ProductVariantSchema = schemaWithName('ProductVariantSchema', {
 
 export type ProductVariantType = InferSchemaType<typeof ProductVariantSchema>
 
-export const ProductSchema = schemaWithName('ProductSchema', {
+export const typedProductId = typedId('prd')
+export type ProductId = typeof typedProductId.__tsFieldType
+
+export const ProductSchema = schemaWithName('Product', {
   _id: {
-    type: typedId('prd')
+    type: typedProductId
   },
   name: {
     type: String,
@@ -104,9 +107,9 @@ export const ProductSchema = schemaWithName('ProductSchema', {
   }
 })
 
-export type ProductType = InferSchemaType<typeof ProductSchema>
+export type Product = InferSchemaType<typeof ProductSchema>
 // The type will be inferred as:
-// type ProductType = {
+// type Product = {
 //   _id: `prd-${string}`;
 //   name: string;
 //   description?: string;
@@ -124,7 +127,7 @@ export type ProductType = InferSchemaType<typeof ProductSchema>
 Orionjs supports the following common types:
 
 ```typescript
-export const TypeExamplesSchema = schemaWithName('TypeExamplesSchema', {
+export const TypeExamplesSchema = schemaWithName('TypeExamples', {
   stringField: {
     type: String         // Text values
   },
@@ -183,7 +186,3 @@ Properties can be configured with the following options:
   }
 }
 ```
-
-## More information
-
-Ask Orionjs documentation search MCP to get detailed information about schemas and APIs of the framework.

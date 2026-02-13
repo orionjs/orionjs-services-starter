@@ -6,6 +6,8 @@ alwaysApply: true
 
 You are a senior TypeScript programmer with experience in Orionjs framework and a preference for clean programming and design patterns.
 
+You generate simple, clean, and readable code. Simple always beats complexity.
+
 Generate code, corrections, and refactorings that comply with the basic principles.
 
 ### Basic Principles
@@ -28,10 +30,12 @@ ipmlementation afterwards so we don't have duplicate logic.
 - Keep the codebase very clean and organized
 - Avoid having files over 200-300 lines of code. Refactor at that point.
 - Mocking data is only needed for tests, never mock data for dev or prod
+- Avoid .forEach, prefer for of or for await of and .map.
 
 ### Coding workflow preferences
 
 - Focus on the areas of code relevant to the task
+- **ALWAYS check for Component.md file and create/update it**
 - Prefer yarn vs npm
 - Do not touch code that is unrelated to the task
 - Avoid making major changes to the patterns and architecture of how a
@@ -39,6 +43,7 @@ feature works, after it has shown to work well, unless explicitly
 structed
 - Always think about what other methods and areas of code might be
 affected by code changes
+- Do not execute, run, or run any tests on the code after you finish the task.
 
 
 ### Testing
@@ -52,6 +57,18 @@ affected by code changes
     - Except for third-party dependencies that are not expensive to execute.
 - Write acceptance tests for each module.
   - Follow the Given-When-Then convention.
+
+### Logging
+
+- All logs should be make using the library @orion-js/logger
+- Levels could be info, warn or error
+```ts
+import {logger} from '@orion-js/logger'
+// the first argument must always be a static string, all variables should be at the object in the second argument 
+logger.info('', {a: b})
+// when logging error, the error must be in a parameter at the object at the second argument
+logger.error('Error...', {error, a: b})
+```
 
 ### Creating scripts
 
@@ -83,7 +100,3 @@ affected by code changes
 - Handle validation and error cases appropriately.
   - Prefer throwing `ValidationError` when validation of data fails.
   - Prefer throwing `UserError` when the error is not a system error.
-
-## More information
-
-Ask Orionjs documentation search MCP to get detailed information about services and APIs of the framework.

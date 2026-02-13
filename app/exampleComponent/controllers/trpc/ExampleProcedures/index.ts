@@ -1,4 +1,12 @@
-import {Procedures, TQuery, TMutation, createTQuery, createTMutation} from '@orion-js/trpc'
+import {
+  Procedures,
+  TQuery,
+  TMutation,
+  TPaginatedQuery,
+  createTQuery,
+  createTMutation,
+  createTPaginatedQuery,
+} from '@orion-js/trpc'
 import {Inject} from '@orion-js/services'
 import {ExampleSchema} from 'app/exampleComponent/schemas/ExampleSchema'
 import {ExampleService} from 'app/exampleComponent/services/ExampleService'
@@ -23,6 +31,23 @@ export class ExampleProcedures {
     returns: [ExampleSchema],
     resolve: async () => {
       return await this.exampleService.getExamples()
+    },
+  })
+
+  @TPaginatedQuery()
+  paginatedExamples = createTPaginatedQuery({
+    params: {name: {type: 'string', optional: true}},
+    returns: ExampleSchema,
+    allowedSorts: ['name', 'createdAt'],
+    defaultSortBy: 'createdAt',
+    defaultSortType: 'desc',
+    defaultLimit: 10,
+    maxLimit: 50,
+    getItems: async (paginationParams, params) => {
+      return await this.exampleService.getPaginatedExamples(paginationParams, params)
+    },
+    getCount: async params => {
+      return await this.exampleService.getExamplesCount(params)
     },
   })
 

@@ -1,7 +1,7 @@
 ---
 description: How to create and use GraphQL resolvers effectively in Orionjs
-globs: 
-alwaysApply: false
+globs: *.ts
+alwaysApply: true
 ---
 
 # How to create good Resolvers in Orionjs
@@ -17,7 +17,7 @@ Resolvers in Orionjs define GraphQL API endpoints using a clean, decorator-based
   - Resolver classes: `{Action}{Entity}Resolvers` (e.g., `GetUserResolvers`, `UpdateProductResolvers`)
   - Mutations: descriptive of the operation (e.g., `listProducts`, `createUser`)
   - Queries: only the name of the entity (e.g., `user`, `productsList`, `blogPosts`)
-- Put resolvers in `app/exampleComponent/controllers/resolvers/{Action}{Entity}/index.ts`
+- Put resolvers in `app/exampleComponent/controllers/resolvers/{Entity}/{Action}/index.ts`
 
 ## Best Practices
 - Use `@Inject(() => ServiceName)` for dependency injection of services
@@ -25,6 +25,7 @@ Resolvers in Orionjs define GraphQL API endpoints using a clean, decorator-based
 - Use `createQuery()`, `createMutation()` and `createModelResolver()` functions
 - Provide descriptive names and descriptions for GraphQL schema documentation
 - Always use `schemaWithName()` for schemas that will be used in GraphQL
+- When creating a schema for params, prefer to clone another schema with the `schemaWithName()` function
 
 ## Query vs Mutation
 - Use `@Query()` for operations that fetch data without side effects
@@ -33,10 +34,9 @@ Resolvers in Orionjs define GraphQL API endpoints using a clean, decorator-based
 ## Example 1: Query
 
 ```typescript
-import {Query, Resolvers} from '@orion-js/graphql'
+import {Query, Resolvers, createQuery} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
 import {schemaWithName} from '@orion-js/schema'
-import {createQuery} from '@orion-js/resolvers'
 import {WebsiteConfigsRepo} from 'app/providers/repos/WebsiteConfigs'
 import {WebsiteConfigSchema} from 'app/providers/schemas/WebsiteConfig'
 
@@ -63,17 +63,17 @@ export class WebsiteConfigResolvers {
 ## Example 2: Full Entity Update Mutation
 
 ```typescript
-import {Mutation, Resolvers} from '@orion-js/graphql'
+import {Mutation, Resolvers, createMutation} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
-import {schemaWithName} from '@orion-js/schema'
-import {createMutation} from '@orion-js/resolvers'
+import {schemaWithName, cloneSchema} from '@orion-js/schema'
 import {WebsiteConfigsRepo} from 'app/providers/repos/WebsiteConfigs'
 import {WebsiteConfigSchema} from 'app/providers/schemas/WebsiteConfig'
 
 // Define a schema with only the fields we want to update
-const UpdatesSchema = schemaWithName('UpdateWebsiteConfigUpdates', {
-  name: {type: String},
-  description: {type: String, optional: true}
+const UpdatesSchema = cloneSchema({
+  name: 'Updates',
+  schema: WebsiteConfigSchema,
+  pickFields: ['name', 'description'],
 })
 
 const WebsiteConfigParams = schemaWithName('UpdateWebsiteConfigParams', {
@@ -100,16 +100,16 @@ export class UpdateWebsiteConfigResolvers {
 ## Example 3: Simple Entity Update Mutation
 
 ```typescript
-import {Mutation, Resolvers} from '@orion-js/graphql'
+import {Mutation, Resolvers, createMutation} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
-import {schemaWithName} from '@orion-js/schema'
-import {createMutation} from '@orion-js/resolvers'
+import {cloneSchema} from '@orion-js/schema'
 import {WebsiteConfigsRepo} from 'app/providers/repos/WebsiteConfigs'
 import {WebsiteConfigSchema} from 'app/providers/schemas/WebsiteConfig'
 
-const SetWebsiteConfigNameParams = schemaWithName('SetWebsiteConfigNameParams', {
-  websiteId: {type: String},
-  name: {type: String}
+const SetWebsiteConfigNameParams = cloneSchema({
+  name: 'SetWebsiteConfigNameParams',
+  schema: WebsiteConfigSchema,
+  pickFields: ['websiteId', 'name']
 })
 
 @Resolvers()
@@ -131,10 +131,9 @@ export class SetWebsiteConfigNameResolvers {
 ## Example 4: Mutation Using a Service
 
 ```typescript
-import {Mutation, Resolvers} from '@orion-js/graphql'
+import {Mutation, Resolvers, createMutation} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
 import {schemaWithName} from '@orion-js/schema'
-import {createMutation} from '@orion-js/resolvers'
 import {SendToInboxService} from 'app/services/SendToInbox'
 
 const SendToInboxParams = schemaWithName('SendToInboxParams', {
@@ -183,9 +182,9 @@ export class PersonResolvers {
 ## Example 6: Paginated Query
 
 ```typescript
-import {PaginatedQuery, Resolvers} from '@orion-js/graphql'
+import {Query, Resolvers} from '@orion-js/graphql'
 import {Inject} from '@orion-js/services'
-import {createPaginatedResolver} from '@orion-js/pagination'
+import {createPaginatedResolver} from '@orion-js/paginated-mongodb'
 import {ProductsRepo} from 'app/providers/repos/Products'
 import {ProductSchema} from 'app/providers/schemas/Product'
 import {ProductsListParams} from 'app/providers/schemas/params/ProductsList'
@@ -195,17 +194,38 @@ export class ProductsListResolvers {
   @Inject(() => ProductsRepo)
   private productsRepo: ProductsRepo
 
-  @PaginatedQuery()
+  @Query()
   productsList = createPaginatedResolver({
     returns: ProductSchema,
     params: ProductsListParams,
     allowedSorts: ['createdAt', 'name'],
-    async getCursor(params) {
-      const query = await this.productsRepo.getProductsListQuery(params)
+    getCursor: async (params) => {
       return {
-        cursor: this.productsRepo.find(query),
-        count: () => this.productsRepo.countDocuments(query)
+        cursor: this.productsRepo.getProductsListCursor(params),
+        count: () => this.productsRepo.getProductsListCount(params)
       }
     }
   })
 }
+```
+
+## Example 7: Complex clone schema for params
+
+```typescript
+import {cloneSchema, InferSchemaType} from '@orion-js/schema'
+import {ArticleSchema} from '../Article'
+
+export const ArticlesListParamsSchema = cloneSchema({
+  name: 'ArticlesListParams',
+  schema: ArticleSchema,
+  extendSchema: {
+    filter: {
+      type: String,
+      optional: true,
+    },
+  },
+  pickFields: ['websiteId', 'type'],
+})
+
+export type ArticlesListParamsType = InferSchemaType<typeof ArticlesListParamsSchema>
+```
